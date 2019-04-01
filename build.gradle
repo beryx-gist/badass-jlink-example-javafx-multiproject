@@ -1,0 +1,47 @@
+buildscript {
+    repositories {
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath "org.javamodularity:moduleplugin:1.4.1"
+        classpath "org.openjfx:javafx-plugin:0.0.7"
+        classpath "org.beryx:badass-jlink-plugin:2.8.0"
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.javamodularity.moduleplugin'
+
+    repositories {
+        jcenter()
+    }
+}
+
+project('greeter-impl') {
+    dependencies {
+        compile project(':greeter-api')
+    }
+}
+
+project('gui') {
+    apply plugin: 'application'
+    apply plugin: 'org.openjfx.javafxplugin'
+    apply plugin: 'org.beryx.jlink'
+
+    dependencies {
+        compile project(':greeter-impl')
+    }
+
+    javafx {
+        modules = ['javafx.controls']
+    }
+
+    mainClassName = "org.example.gui/org.example.gui.HelloFX"
+    jlink {
+        options = ['--bind-services', '--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+        launcher {
+            name = 'helloFX'
+        }
+    }
+}

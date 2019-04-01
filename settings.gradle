@@ -1,0 +1,9 @@
+rootProject.name = 'badass-jlink-example-javafx-multiproject'
+
+String[] modules = [
+    'greeter-api',
+    'greeter-impl',
+    'gui'
+]
+
+include modules
