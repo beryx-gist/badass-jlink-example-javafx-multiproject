@@ -13,7 +13,7 @@ javafx {
 
 mainClassName = "org.example.gui/org.example.gui.HelloFX"
 jlink {
-    imageZip = file("$buildDir/image-zip/hellofx.zip"))
+    imageZip = file("$buildDir/image-zip/hellofx.zip")
     options = ['--bind-services', '--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
 
     if(System.getenv("CI")) {
