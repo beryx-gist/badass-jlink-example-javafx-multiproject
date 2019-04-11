@@ -36,7 +36,7 @@ deploy:
   github-token: $GITHUB_TOKEN
   keep-history: false
   target-branch: images
-  local-dir: build/image-zip
+  local-dir: gui/build/image-zip
   on:
     branch: master
 

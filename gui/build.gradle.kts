@@ -17,6 +17,7 @@ application {
 }
 
 jlink {
+    imageZip.set(File("$buildDir/image-zip/hellofx.zip"))
     addOptions("--bind-services", "--strip-debug", "--compress", "2", "--no-header-files", "--no-man-pages")
     if("true".equals(System.getenv("CI"))) {
         listOf("win", "linux", "mac").forEach { name ->
