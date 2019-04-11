@@ -5,7 +5,7 @@ buildscript {
     dependencies {
         classpath "org.javamodularity:moduleplugin:1.4.1"
         classpath "org.openjfx:javafx-plugin:0.0.7"
-        classpath "org.beryx:badass-jlink-plugin:2.8.0"
+        // classpath "org.beryx:badass-jlink-plugin:2.9.5"
     }
 }
 
@@ -39,7 +39,14 @@ project('gui') {
 
     mainClassName = "org.example.gui/org.example.gui.HelloFX"
     jlink {
-        options = ['--bind-services', '--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+        options = ['--add-modules', 'javafx.media',
+                '--bind-services', '--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+        // addExtraModulePath 'D:/Downloads/_openjfx-jmods/javafx-jmods-11.0.2-linux'
+
+        targetPlatform('win', '')
+        targetPlatform('linux', 'D:/Downloads/jdk-11.0.2+9-linux')
+        targetPlatform('mac', '')
+
         launcher {
             name = 'helloFX'
         }

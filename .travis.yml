@@ -7,11 +7,41 @@ sudo: false
 jdk:
   - openjdk11
 
+before_install:
+  - wget -O openjfx-win.zip $OPENJFX_URL_WIN
+  - unzip openjfx-win.zip -d win
+  - ls -al $OPENJFX_MODS_WIN
+  - wget -O openjfx-mac.zip $OPENJFX_URL_MAC
+  - unzip openjfx-mac.zip -d mac
+  - ls -al $OPENJFX_MODS_MAC
+  - wget -O openjfx-linux.zip $OPENJFX_URL_LINUX
+  - unzip openjfx-linux.zip -d linux
+  - ls -al $OPENJFX_MODS_LINUX
+  - wget -O jdk-win.zip $JDK_URL_WIN
+  - unzip jdk-win.zip -d win
+  - ls -al $JDK_HOME_WIN
+  - wget -O jdk-mac.tar.gz $JDK_URL_MAC
+  - tar xzf jdk-mac.tar.gz -C mac
+  - ls -al $JDK_HOME_MAC
+  - wget -O jdk-linux.tar.gz $JDK_URL_LINUX
+  - tar xzf jdk-linux.tar.gz -C linux
+  - ls -al $JDK_HOME_LINUX
+
 install:
   - chmod a+x ./gradlew
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  keep-history: false
+  target-branch: images
+  local-dir: build/image-zip
+  on:
+    branch: master
 
 cache:
   directories:
     - $HOME/.gradle
 
-script: ./gradlew -is clean jlink
+script: ./gradlew -is clean jlinkZip
