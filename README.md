@@ -30,3 +30,12 @@ cd gui/build/image/bin
 ```
 
 A window containing the text `Hello, OpenJFX!` should appear on the screen.
+
+**Creating an installable package:**
+```
+./gradlew jpackage
+```
+
+The above command will generate the platform-specific installers in the `gui/build/jpackage` directory.
+
+:bulb: You can check the artifacts produced by the [GitHub actions used to build this project](https://github.com/beryx-gist/badass-jlink-example-javafx-multiproject/actions?query=workflow%3A%22Gradle+Build%22) and download an application package for your platform (such as [from here](https://github.com/beryx-gist/badass-jlink-example-javafx-multiproject/actions/runs/287740188)).
