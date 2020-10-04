@@ -25,6 +25,9 @@ jlink {
         name = 'helloFX'
         noConsole = true
     }
+    mergedModule {
+        mergedModuleJarVersion = "2.2.2"
+    }
     jpackage {
         if(os.windows) {
             installerOptions = ['--win-per-user-install', '--win-dir-chooser', '--win-menu']
