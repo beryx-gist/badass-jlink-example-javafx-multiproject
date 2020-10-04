@@ -9,4 +9,24 @@ subprojects {
     repositories {
         jcenter()
     }
+
+    task info {
+        doLast {
+            println "### CONFIGURATIONS of $project.name: " + project.configurations*.name
+            // println "\n#####  $project.name: " + getAllDependentProjects(project)
+
+            project.configurations.each { cfg ->
+                println "$cfg.name extendsFrom: ${cfg.extendsFrom*.name}"
+            }
+        }
+    }
+}
+
+List<Project> getAllDependentProjects(Project project) {
+    def projectDependencies = project.configurations*.dependencies*.withType(org.gradle.api.artifacts.ProjectDependency).flatten()
+    def dependentProjects = projectDependencies*.dependencyProject
+    if (dependentProjects.size > 0) {
+        dependentProjects.each { dependentProjects += getAllDependentProjects(it) }
+    }
+    return dependentProjects.unique()
 }

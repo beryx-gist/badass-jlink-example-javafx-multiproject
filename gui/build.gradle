@@ -1,10 +1,17 @@
 plugins {
     id "application"
     id "org.openjfx.javafxplugin" version "0.0.7"
-    id "org.beryx.jlink" version "2.10.0"
+    id "org.beryx.jlink" version "2.15.0"
+    id 'java-library'
 }
+configurations {
+    serverRuntime  { extendsFrom compile }
+    serverRuntimeClasspath {extendsFrom runtimeClasspath, serverRuntime  }
+}
+
 dependencies {
-    compile project(':greeter-impl')
+    api project(':greeter-impl')
+    serverRuntime project(':greeter-impl')
 }
 
 javafx {
@@ -13,9 +20,11 @@ javafx {
 
 mainClassName = "org.example.gui/org.example.gui.HelloFX"
 jlink {
+    configuration = 'serverRuntimeClasspath'
     imageZip = file("$buildDir/image-zip/hellofx.zip")
     options = ['--bind-services', '--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
 
+    // Travis should build custom runtime images for all platforms
     if(System.getenv("CI")) {
         ["win", "linux", "mac"].each { name ->
             targetPlatform(name) {
@@ -28,4 +37,12 @@ jlink {
     launcher {
         name = 'helloFX'
     }
+
+    jpackage {
+        // Set the environment property BADASS_JLINK_JPACKAGE_HOME or explicitly configure the below property
+        // jpackageHome = '/usr/lib/jvm/jdk14'
+        imageOptions = ['--icon', 'src/main/resources/hellofx.ico']
+        installerOptions = ['--file-associations', 'src/main/resources/associations.properties']
+    }
+
 }

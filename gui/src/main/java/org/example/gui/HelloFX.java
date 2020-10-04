@@ -1,5 +1,6 @@
 package org.example.gui;
 
+import java.util.List;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -12,8 +13,9 @@ public class HelloFX extends Application {
 
     @Override
     public void start(Stage stage) {
+        List<String> args = this.getParameters().getRaw();
         Greeter greeter = Greeter.getInstance().orElseThrow();
-        String greeting = greeter.getGreeting("OpenJFX");
+        String greeting = greeter.getGreeting(args.toString());
         Label label = new Label(greeting);
         label.setFont(Font.font(48));
         StackPane pane = new StackPane(label);
