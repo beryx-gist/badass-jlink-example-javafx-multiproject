@@ -27,6 +27,7 @@ jlink {
     }
     mergedModule {
         mergedModuleJarVersion = "2.2.2"
+        version = "3.3.3"
     }
     jpackage {
         if(os.windows) {
